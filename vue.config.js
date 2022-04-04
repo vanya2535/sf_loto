@@ -6,5 +6,14 @@ module.exports = defineConfig({
       args[0].fix = true
       return args
     })
+  },
+  css: {
+    loaderOptions: {
+      scss: {
+        additionalData: `
+          @import "~@/assets/scss/core/variables.scss";
+        `
+      }
+    }
   }
 })

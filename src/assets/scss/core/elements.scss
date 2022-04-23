@@ -1,0 +1,72 @@
+.btn {
+  border-radius: 4px;
+  color: $dark;
+  transition: 0.1s;
+
+  &_block {
+    width: 100%;
+  }
+
+  &_sm {
+    padding: 0 12px;
+    font-size: 16px;
+  }
+
+  &_med {
+    padding: 12px 24px;
+    font-size: 18px;
+  }
+
+  &_graphite {
+    color: $white;
+    background: $graphite;
+
+    &:hover {
+      @media (min-width: 1024px) {
+        background: $primary;
+        transform: scale(1.03);
+      }
+    }
+  }
+
+  &_outlined {
+    border: 1px solid $steel;
+
+    &:hover {
+      @media (min-width: 1024px) {
+        box-shadow: 1px 1px 10px $shadow;
+        color: $primary;
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  &:disabled {
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 110%;
+      top: 50%;
+      width: 8px;
+      height: 200%;
+      background: #fff;
+      filter: blur(10px);
+      transform: translate(-50%, -50%) rotate(45deg);
+      animation: left-to-right 2s infinite;
+      will-change: left;
+    }
+  }
+}
+
+@keyframes left-to-right {
+  from {
+    left: -10%;
+  }
+
+  to {
+    right: 110%;
+  }
+}

@@ -1,5 +1,5 @@
 <template>
-  <header class="header">
+  <header class="header d-flex">
     <button
       class="header__button"
       :class="{ header__button_active: isMenuOpen }"
@@ -10,21 +10,25 @@
       <div class="line" />
     </button>
 
-    <router-link class="header__link" to="/">СФ ЛОТО</router-link>
-    <div class="header__title">Играй и выигрывай!</div>
-    <div class="header__subtitle">не является настоящим лото</div>
+    <img src="@/assets/img/lottery.svg" alt="" srcset="" />
+
+    <div class="header__info">
+      <router-link class="header__link" to="/">СФ ЛОТО</router-link>
+      <div class="header__title">Играй и выигрывай!</div>
+      <div class="header__subtitle">не является настоящим лото</div>
+    </div>
   </header>
 
-  <Menu v-if="isMenuOpen" />
+  <NavbarMenu v-if="isMenuOpen" v-model="isMenuOpen" />
 </template>
 
 <script>
-import Menu from './Menu'
+import NavbarMenu from './NavbarMenu'
 
 export default {
   name: 'Header',
 
-  components: { Menu },
+  components: { NavbarMenu },
 
   data() {
     return {
@@ -41,11 +45,17 @@ export default {
   right: 0;
   top: 0;
   z-index: 3;
+  column-gap: 12px;
+  justify-content: center;
   border-bottom: 1px solid $steel;
   padding: 12px;
   height: 76px;
   text-align: center;
   background: $white;
+
+  img {
+    height: 100%;
+  }
 
   &__link {
     font-weight: 700;
@@ -54,7 +64,9 @@ export default {
     color: $dark;
 
     &:hover {
-      color: $graphite;
+      @media (min-width: 1024px) {
+        color: $graphite;
+      }
     }
   }
 
@@ -92,7 +104,9 @@ export default {
     }
 
     &:hover {
-      background: $primary;
+      @media (min-width: 1024px) {
+        background: $primary;
+      }
     }
   }
 

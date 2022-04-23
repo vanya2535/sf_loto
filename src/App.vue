@@ -1,22 +1,60 @@
 <template>
   <Header />
-  <div class="space"></div>
   <main class="router-view">
     <router-view />
   </main>
   <Footer />
+  <AuthModal v-if="isAuthModalVisible" v-model="isAuthModalVisible" />
+  <FloatingMessage />
 </template>
 
 <script>
+import { useCookies } from 'vue3-cookies'
+import { mapMutations } from 'vuex'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
+import AuthModal from '@/components/modals/AuthModal'
+import FloatingMessage from '@/components/layout/FloatingMessage'
 
 export default {
   name: 'App',
 
   components: {
     Header,
-    Footer
+    Footer,
+    AuthModal,
+    FloatingMessage
+  },
+
+  data() {
+    AuthModal
+    return {
+      isAuthModalVisible: false
+    }
+  },
+
+  methods: {
+    ...mapMutations('user', ['SET_USER_DATA'])
+  },
+
+  async created() {
+    this.$eventBus.on('openAuthModal', () => {
+      this.isAuthModalVisible = true
+    })
+
+    const { cookies } = useCookies()
+    const form = {
+      token: cookies.get('auth_token'),
+      user: {
+        id: cookies.get('user_id'),
+        username: cookies.get('username'),
+        roles: JSON.parse(cookies.get('user_roles'))
+      }
+    }
+
+    if (form.token && Object.values(form.user).every((value) => value.length)) {
+      this.SET_USER_DATA(form)
+    }
   }
 }
 </script>
@@ -25,6 +63,8 @@ export default {
 *,
 *::before,
 *::after {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
   font-family: 'Rubik', sans-serif;
 }
@@ -89,6 +129,10 @@ button,
 textarea,
 select {
   font: inherit;
+}
+
+input {
+  outline: none;
 }
 
 #app {

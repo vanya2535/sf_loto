@@ -1,0 +1,69 @@
+@import './variables.scss';
+
+.overlay {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 3;
+  overflow: hidden;
+  background: rgba($primary, 60%);
+  animation: appear 0.2s;
+
+  &__modal {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    border-radius: 24px;
+    padding: 32px 48px;
+    background: $white;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.d-flex {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+@keyframes appear {
+  from {
+    background: rgba($primary, 0%);
+    opacity: 0;
+  }
+
+  to {
+    background: rgba($primary, 60%);
+  }
+}
+
+@media (max-width: 767px) {
+  .overlay__modal {
+    left: 0;
+    right: 0;
+    top: auto;
+    bottom: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    transform: initial;
+    animation: slide-up 0.2s;
+  }
+}
+
+@media (max-width: 425px) {
+  .overlay__modal {
+    padding: 24px 16px;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    bottom: -100vh;
+  }
+
+  to {
+    bottom: 0;
+  }
+}

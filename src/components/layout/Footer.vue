@@ -36,7 +36,9 @@ export default {
     color: $gray;
 
     &:hover {
-      text-decoration: underline;
+      @media (min-width: 1024px) {
+        text-decoration: underline;
+      }
     }
   }
 }

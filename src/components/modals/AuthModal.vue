@@ -106,7 +106,7 @@ export default {
           case 0:
             await this.LOGIN({ ...this.form, role: 'USER' })
 
-            this.$store.commit('message/PUSH_MESSAGE', {
+            this.$eventBus.emit('pushMessage', {
               message: 'Вы успешно вошли в учетную запись',
               type: 'success'
             })
@@ -114,7 +114,7 @@ export default {
           case 1:
             await this.REGISTER(this.form)
 
-            this.$store.commit('message/PUSH_MESSAGE', {
+            this.$eventBus.emit('pushMessage', {
               message: 'Вы успешно зарегистрировали учетную запись',
               type: 'success'
             })

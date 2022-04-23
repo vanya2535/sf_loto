@@ -42,7 +42,7 @@ export default {
 
     logout() {
       this.LOGOUT()
-      this.$store.commit('message/PUSH_MESSAGE', {
+      this.$eventBus.emit('pushMessage', {
         message: 'Вы успешно вышли из учетной записи',
         type: 'success'
       })

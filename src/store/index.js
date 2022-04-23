@@ -1,6 +1,5 @@
 import { createStore } from 'vuex'
 import user from './modules/user'
-import message from './modules/message'
 
 export default createStore({
   state: {},
@@ -11,11 +10,6 @@ export default createStore({
     user: {
       namespaced: true,
       ...user
-    },
-
-    message: {
-      namespaced: true,
-      ...message
     }
   }
 })

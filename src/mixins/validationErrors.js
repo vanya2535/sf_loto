@@ -29,7 +29,7 @@ export default {
     catchErrors(response) {
       if (response?.data) {
         if (response.data.message) {
-          this.$store.commit('message/PUSH_MESSAGE', {
+          this.$eventBus.emit('pushMessage', {
             message: response.data.message,
             type: 'error'
           })

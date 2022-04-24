@@ -6,12 +6,15 @@
         v-model="value"
         :name="name"
         :type="type"
+        :inputmode="inputMode"
         class="input"
         :class="{
           'input_not-empty': value.length,
           input_error: !!error.length
         }"
         :autocomplete="autocomplete"
+        @keypress="validateKey"
+        @input="inputValue"
       />
 
       <label class="input__label" :for="name">{{ label }}</label>
@@ -58,6 +61,7 @@
 </template>
 
 <script>
+import { intValidator } from '@/components/helpers/inputValidator'
 import modelValue from '@/mixins/modelValue'
 
 export default {
@@ -81,6 +85,23 @@ export default {
       validator: (value) => ['text', 'password'].includes(value)
     },
 
+    inputMode: {
+      type: String,
+      default: 'text',
+
+      validator: (value) =>
+        [
+          'none',
+          'text',
+          'decimal',
+          'numeric',
+          'tel',
+          'search',
+          'email',
+          'url'
+        ].includes(value)
+    },
+
     autocomplete: {
       type: String,
       default: 'off'
@@ -89,6 +110,12 @@ export default {
     error: {
       type: String,
       default: ''
+    },
+
+    validation: {
+      type: String,
+      default: 'text',
+      validator: (value) => ['text', 'int', 'cost'].includes(value)
     }
   },
 
@@ -105,6 +132,27 @@ export default {
         : this.isValueVisible
         ? 'text'
         : 'password'
+    }
+  },
+
+  methods: {
+    intValidator,
+    validateKey(e) {
+      if (['int', 'cost'].includes(this.validation)) {
+        this.intValidator(e)
+      }
+    },
+
+    inputValue(e) {
+      if (this.validation === 'cost') {
+        let value = `${e.target.value}`.replaceAll(' ', '')
+
+        if (value[0] === '0') {
+          value = +value.slice(1)
+        }
+
+        this.value = this.$costMask(value)
+      }
     }
   }
 }

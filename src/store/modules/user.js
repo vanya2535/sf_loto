@@ -7,6 +7,7 @@ export default {
     id: '',
     username: '',
     roles: [],
+    balance: null,
     token: ''
   }),
 

@@ -17,12 +17,29 @@
       <div class="header__title">Играй и выигрывай!</div>
       <div class="header__subtitle">не является настоящим лото</div>
     </div>
+
+    <div v-if="IS_AUTHORIZED" class="header__user">
+      <div class="header__username">{{ GET_USER_USERNAME }}</div>
+
+      <div
+        v-if="GET_USER_ROLES.includes('USER')"
+        class="header__balance"
+        @click="$eventBus.emit('openRefillModal')"
+      >
+        {{ $costMask(GET_BALANCE || 0) }} ₽
+      </div>
+    </div>
   </header>
 
-  <NavbarMenu v-if="isMenuOpen" v-model="isMenuOpen" />
+  <NavbarMenu
+    v-model="isMenuOpen"
+    class="header__menu"
+    :class="{ header__menu_visible: isMenuOpen }"
+  />
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import NavbarMenu from './NavbarMenu'
 
 export default {
@@ -34,6 +51,15 @@ export default {
     return {
       isMenuOpen: false
     }
+  },
+
+  computed: {
+    ...mapGetters('user', [
+      'IS_AUTHORIZED',
+      'GET_USER_USERNAME',
+      'GET_USER_ROLES',
+      'GET_BALANCE'
+    ])
   }
 }
 </script>
@@ -121,6 +147,61 @@ export default {
     font-size: 10px;
     color: $gray;
   }
+
+  &__user {
+    position: absolute;
+    right: 38px;
+    top: 50%;
+    text-align: end;
+    transform: translateY(-50%);
+
+    .header {
+      &__username {
+        margin-bottom: -6px;
+        font-size: 16px;
+        color: $graphite;
+      }
+
+      &__balance {
+        font-size: 14px;
+        color: $dark;
+        cursor: pointer;
+
+        &:hover {
+          @media (min-width: 1024px) {
+            color: $primary;
+          }
+        }
+      }
+    }
+  }
+
+  &__menu_visible {
+    display: block !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .header {
+    img {
+      position: absolute;
+      left: 36px;
+      top: 50%;
+      width: 51px;
+      height: 51px;
+      transform: translateY(-50%);
+    }
+
+    &__button {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .header__menu {
+    display: none;
+  }
 }
 
 @media (max-width: 425px) {
@@ -153,6 +234,22 @@ export default {
             width: 14px;
             transition: width 0.2s;
           }
+        }
+      }
+    }
+
+    &__user {
+      right: 24px;
+
+      .header {
+        &__username {
+          margin-bottom: -4px;
+          font-size: 14px;
+          color: $graphite;
+        }
+
+        &__balance {
+          font-size: 12px;
         }
       }
     }

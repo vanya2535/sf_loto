@@ -5,15 +5,17 @@
   </main>
   <Footer />
   <AuthModal v-if="isAuthModalVisible" v-model="isAuthModalVisible" />
+  <RefillModal v-if="isRefillModalVisible" v-model="isRefillModalVisible" />
   <FloatingMessage />
 </template>
 
 <script>
 import { useCookies } from 'vue3-cookies'
-import { mapMutations } from 'vuex'
+import { mapActions, mapMutations } from 'vuex'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import AuthModal from '@/components/modals/AuthModal'
+import RefillModal from '@/components/modals/RefillModal'
 import FloatingMessage from '@/components/layout/FloatingMessage'
 
 export default {
@@ -23,18 +25,21 @@ export default {
     Header,
     Footer,
     AuthModal,
+    RefillModal,
     FloatingMessage
   },
 
   data() {
     AuthModal
     return {
-      isAuthModalVisible: false
+      isAuthModalVisible: false,
+      isRefillModalVisible: false
     }
   },
 
   methods: {
-    ...mapMutations('user', ['SET_USER_DATA'])
+    ...mapActions('user', ['GET_USER_DATA']),
+    ...mapMutations('user', ['SET_TOKEN'])
   },
 
   async created() {
@@ -42,18 +47,15 @@ export default {
       this.isAuthModalVisible = true
     })
 
-    const { cookies } = useCookies()
-    const form = {
-      token: cookies.get('auth_token'),
-      user: {
-        id: cookies.get('user_id'),
-        username: cookies.get('username'),
-        roles: JSON.parse(cookies.get('user_roles'))
-      }
-    }
+    this.$eventBus.on('openRefillModal', () => {
+      this.isRefillModalVisible = true
+    })
 
-    if (form.token && Object.values(form.user).every((value) => value.length)) {
-      this.SET_USER_DATA(form)
+    const { cookies } = useCookies()
+    const token = cookies.get('auth_token')
+
+    if (token) {
+      this.GET_USER_DATA(token)
     }
   }
 }
@@ -135,6 +137,10 @@ input {
   outline: none;
 }
 
+input:-webkit-autofill {
+  box-shadow: inset 0 0 0 50px #fff !important;
+}
+
 #app {
   min-height: 100%;
   background: $background;
@@ -148,6 +154,15 @@ input {
   max-width: 1440px;
   box-shadow: 0 10px 100px $shadow;
   background: $white;
+}
+
+@media (min-width: 768px) {
+  .router-view {
+    margin: 160px auto 24px;
+    border-radius: 12px;
+    width: 85vw;
+    min-height: calc(100vh - 257px);
+  }
 }
 
 @media (max-width: 768px) {

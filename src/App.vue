@@ -100,6 +100,16 @@ body {
   text-rendering: optimizespeed;
   background: $background;
   scroll-behavior: smooth;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    box-shadow: inset 0 0 6px rgb(0 0 0 / 30%);
+    background: #e5e5e6;
+  }
 }
 
 a:not([class]) {

@@ -98,7 +98,7 @@ html,
 body {
   line-height: 1.5;
   text-rendering: optimizespeed;
-  background: $background;
+  background: $app;
   scroll-behavior: smooth;
 
   &::-webkit-scrollbar {
@@ -153,7 +153,7 @@ input:-webkit-autofill {
 
 #app {
   min-height: 100%;
-  background: $background;
+  background: $app;
 }
 
 .router-view {
@@ -163,7 +163,7 @@ input:-webkit-autofill {
   min-height: calc(100vh - 207px);
   max-width: 1440px;
   box-shadow: 0 10px 100px $shadow;
-  background: $white;
+  background: $app;
 }
 
 @media (min-width: 768px) {

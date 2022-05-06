@@ -16,3 +16,9 @@ Axios.interceptors.request.use((config) => {
 })
 
 export default Axios
+
+export const axios = {
+  install: (app, options) => {
+    app.config.globalProperties.$axios = Axios
+  }
+}

@@ -15,9 +15,25 @@ function catchErrors(response) {
   }
 }
 
+const formatDate = (date) => {
+  return new Date(date).toLocaleString().replace(',', '').slice(0, 16)
+}
+
+const convertToQuery = (query) => {
+  const result = []
+
+  for (let key in query) {
+    result.push(`${key}=${query[key]}`)
+  }
+
+  return result.join('&')
+}
+
 export default {
   install: (app, options) => {
     app.config.globalProperties.$costMask = costMask
     app.config.globalProperties.$catchErrors = catchErrors
+    app.config.globalProperties.$formatDate = formatDate
+    app.config.globalProperties.$convertToQuery = convertToQuery
   }
 }

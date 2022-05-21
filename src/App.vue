@@ -1,56 +1,28 @@
 <template>
-  <Header />
-  <main class="router-view">
+  <component :is="layout">
     <router-view />
-  </main>
-  <Footer />
-  <AuthModal v-if="isAuthModalVisible" v-model="isAuthModalVisible" />
-  <RefillModal v-if="isRefillModalVisible" v-model="isRefillModalVisible" />
-  <FloatingMessage />
+  </component>
 </template>
 
 <script>
 import { useCookies } from 'vue3-cookies'
 import { mapActions, mapMutations } from 'vuex'
-import Header from '@/components/layout/Header'
-import Footer from '@/components/layout/Footer'
-import AuthModal from '@/components/modals/AuthModal'
-import RefillModal from '@/components/modals/RefillModal'
-import FloatingMessage from '@/components/layout/FloatingMessage'
 
 export default {
   name: 'App',
-
-  components: {
-    Header,
-    Footer,
-    AuthModal,
-    RefillModal,
-    FloatingMessage
-  },
-
-  data() {
-    AuthModal
-    return {
-      isAuthModalVisible: false,
-      isRefillModalVisible: false
-    }
-  },
 
   methods: {
     ...mapActions('user', ['GET_USER_DATA']),
     ...mapMutations('user', ['SET_TOKEN'])
   },
 
+  computed: {
+    layout() {
+      return this.$route.meta.layout || 'DefaultLayout'
+    }
+  },
+
   async created() {
-    this.$eventBus.on('openAuthModal', () => {
-      this.isAuthModalVisible = true
-    })
-
-    this.$eventBus.on('openRefillModal', () => {
-      this.isRefillModalVisible = true
-    })
-
     const { cookies } = useCookies()
     const token = cookies.get('auth_token')
 
@@ -154,37 +126,5 @@ input:-webkit-autofill {
 #app {
   min-height: 100%;
   background: $app;
-}
-
-.router-view {
-  margin: 110px auto 24px;
-  border-radius: 12px;
-  width: 85vw;
-  min-height: calc(100vh - 207px);
-  max-width: 1440px;
-  box-shadow: 0 10px 100px $shadow;
-  background: $app;
-}
-
-@media (min-width: 768px) {
-  .router-view {
-    margin: 160px auto 24px;
-    border-radius: 12px;
-    width: 85vw;
-    min-height: calc(100vh - 257px);
-  }
-}
-
-@media (max-width: 768px) {
-  .router-view {
-    width: 90vw;
-  }
-}
-
-@media (max-width: 425px) {
-  .router-view {
-    margin: 72px auto 24px;
-    min-height: calc(100vh - 169px);
-  }
 }
 </style>

@@ -1,12 +1,10 @@
 <template>
-  <div class="index">
-    <div class="lotteries">
-      <LotteryItem
-        v-for="lottery of lotteries"
-        :key="lottery.serial"
-        :lottery="lottery"
-      />
-    </div>
+  <div class="lotteries">
+    <LotteryItem
+      v-for="lottery of lotteries"
+      :key="lottery.serial"
+      :lottery="lottery"
+    />
   </div>
 </template>
 
@@ -74,10 +72,6 @@ export default {
 </script>
 
 <style scoped>
-.index {
-  padding: 16px;
-}
-
 .lotteries {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

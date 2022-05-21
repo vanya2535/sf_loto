@@ -11,9 +11,10 @@ module.exports = defineConfig({
     loaderOptions: {
       scss: {
         additionalData: `
-          @import "~@/assets/scss/core/variables.scss";
+          @import "~@/assets/scss/core/animations.scss";
           @import "~@/assets/scss/core/blocks.scss";
           @import "~@/assets/scss/core/elements.scss";
+          @import "~@/assets/scss/core/variables.scss";
         `
       }
     }

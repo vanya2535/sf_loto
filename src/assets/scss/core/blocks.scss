@@ -61,22 +61,12 @@
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
     transform: initial;
-    animation: slide-up 0.2s;
+    animation: modal-slide-up 0.2s;
   }
 }
 
 @media (max-width: 425px) {
   .overlay__modal {
     padding: 24px 16px;
-  }
-}
-
-@keyframes slide-up {
-  from {
-    bottom: -100vh;
-  }
-
-  to {
-    bottom: 0;
   }
 }

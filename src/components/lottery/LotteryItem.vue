@@ -269,14 +269,4 @@ export default {
     }
   }
 }
-
-@keyframes left-to-right {
-  from {
-    left: -50%;
-  }
-
-  to {
-    right: 150%;
-  }
-}
 </style>

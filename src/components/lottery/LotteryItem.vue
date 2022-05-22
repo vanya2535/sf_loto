@@ -21,7 +21,11 @@
         {{ lottery.description }}
       </p>
 
-      <router-link :to="`/lottery/${lottery.serial}`" target="_blank">
+      <router-link
+        v-if="$route.name === 'Index'"
+        :to="`/lottery/${lottery.serial}`"
+        target="_blank"
+      >
         <button class="btn btn_graphite btn_med">
           {{ buttonText }}
         </button>

@@ -14,7 +14,7 @@ import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import FloatingMessage from '@/components/layout/FloatingMessage'
 import AuthModal from '@/components/modals/AuthModal'
-import RefillModal from '@/components/modals/RefillModal'
+import RefillModal from '@/components/modals/wallet/RefillModal'
 
 export default {
   name: 'DefaultLayout',

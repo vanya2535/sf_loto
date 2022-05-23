@@ -28,10 +28,16 @@
     </div>
 
     <TicketsModal
-      v-if="isTicketsModalVisible"
+      v-show="isTicketsModalVisible"
       v-model="isTicketsModalVisible"
       :lottery="lottery"
       @updateLotteryState="updateLotteryState"
+    />
+
+    <ResultsModal
+      v-show="isResultsModalVisible"
+      v-model="isResultsModalVisible"
+      :lottery="lottery"
     />
   </div>
 </template>
@@ -40,13 +46,15 @@
 import { mapGetters } from 'vuex'
 import LotteryItem from '@/components/lottery/LotteryItem'
 import TicketsModal from '@/components/modals/lottery/TicketsModal'
+import ResultsModal from '@/components/modals/lottery/ResultsModal'
 
 export default {
   name: 'Lottery',
 
   components: {
     LotteryItem,
-    TicketsModal
+    TicketsModal,
+    ResultsModal
   },
 
   data() {

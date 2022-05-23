@@ -37,6 +37,11 @@
         }
       }
 
+      &__attemption {
+        margin-top: 10px;
+        color: $graphite;
+      }
+
       &__submit-button {
         margin-top: 20px;
       }
@@ -77,5 +82,9 @@
 @media (max-width: 425px) {
   .overlay__modal {
     padding: 24px 16px;
+
+    .modal__attemption br {
+      display: none;
+    }
   }
 }

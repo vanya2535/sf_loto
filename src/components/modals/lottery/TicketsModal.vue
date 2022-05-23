@@ -143,15 +143,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.modal__attemption {
-  margin-top: 10px;
-  color: $graphite;
-}
-
 .tickets {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
-  background: $background-gray;
   gap: 12px;
 
   .ticket {
@@ -203,21 +197,15 @@ export default {
   }
 }
 
-@media (min-width: 425px) {
-  .modal__attemption br {
-    display: none;
-  }
-}
-
 @media (max-width: 767px) {
   .tickets {
-    grid-template-columns: repeat(8, 1fr);
+    grid-template-columns: repeat(6, 1fr);
   }
 }
 
 @media (max-width: 425px) {
   .tickets {
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(5, 1fr);
   }
 }
 </style>

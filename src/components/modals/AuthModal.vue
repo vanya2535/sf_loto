@@ -4,11 +4,12 @@
       class="auth-modal overlay__modal"
       @click.stop
       @submit.prevent="submit"
+      @keydown.enter="submit"
     >
       <AuthStepper v-model="step" />
 
-      <div class="auth-modal__inputs">
-        <Forminput
+      <div class="modal__body">
+        <form-input
           v-model="form.username"
           name="username"
           label="Имя пользователя"
@@ -17,7 +18,7 @@
           @input="resetErrors('username')"
         />
 
-        <Forminput
+        <form-input
           v-model="form.password"
           :name="step === 0 ? 'current-password' : 'new-password'"
           label="Пароль"
@@ -27,7 +28,7 @@
           @input="resetErrors('password')"
         />
 
-        <Forminput
+        <form-input
           v-show="step === 1"
           v-model="confirmPassword"
           name="new-password-confirm"
@@ -40,7 +41,7 @@
       </div>
 
       <button
-        class="auth-modal__submit-button btn btn_graphite btn_block btn_med"
+        class="modal__submit-button btn btn_graphite btn_block btn_med"
         type="submit"
         :disabled="loading"
       >
@@ -52,7 +53,6 @@
 
 <script>
 import { mapActions } from 'vuex'
-import Forminput from '@/components/elements/FormInput'
 import overlay from '@/mixins/overlay'
 import AuthStepper from '@/components/elements/AuthStepper'
 import validationErrors from '@/mixins/validationErrors'
@@ -60,7 +60,7 @@ import validationErrors from '@/mixins/validationErrors'
 export default {
   name: 'AuthModal',
   mixins: [overlay, validationErrors],
-  components: { Forminput, AuthStepper },
+  components: { AuthStepper },
 
   data() {
     return {
@@ -124,7 +124,7 @@ export default {
         this.overlay = false
       } catch (e) {
         console.error(e.response)
-        this.catchErrors(e?.response)
+        this.$catchErrors(e?.response)
       } finally {
         this.loading = false
       }
@@ -132,26 +132,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.auth-modal {
-  &__title {
-    font-weight: 400;
-    font-size: 24px;
-    line-height: 28px;
-    letter-spacing: -0.7px;
-    text-align: center;
-  }
-
-  &__inputs {
-    display: grid;
-    grid-template-columns: 1fr;
-    margin-top: 20px;
-    row-gap: 18px;
-  }
-
-  &__submit-button {
-    margin-top: 20px;
-  }
-}
-</style>

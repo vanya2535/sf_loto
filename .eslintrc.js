@@ -33,6 +33,7 @@ module.exports = {
       }
     ],
     'comma-dangle': ['error', 'never'],
-    'no-unused-vars': 0
+    'no-unused-vars': 0,
+    'no-prototype-builtins': 0
   }
 }

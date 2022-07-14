@@ -1,0 +1,19 @@
+@keyframes left-to-right {
+  from {
+    left: -100%;
+  }
+
+  to {
+    right: 200%;
+  }
+}
+
+@keyframes modal-slide-up {
+  from {
+    bottom: -100vh;
+  }
+
+  to {
+    bottom: 0;
+  }
+}

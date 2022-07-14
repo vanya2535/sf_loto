@@ -61,12 +61,16 @@
   }
 }
 
-@keyframes left-to-right {
-  from {
-    left: -10%;
-  }
+@media (max-width: 768px) {
+  .btn {
+    &_sm {
+      padding: 0 10px;
+      font-size: 14px;
+    }
 
-  to {
-    right: 110%;
+    &_med {
+      padding: 10px 20px;
+      font-size: 16px;
+    }
   }
 }

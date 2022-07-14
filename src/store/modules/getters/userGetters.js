@@ -13,5 +13,9 @@ export default {
 
   IS_AUTHORIZED(state) {
     return !!state.token
+  },
+
+  GET_BALANCE(state) {
+    return state.balance
   }
 }

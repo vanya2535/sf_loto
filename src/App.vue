@@ -1,59 +1,33 @@
 <template>
-  <Header />
-  <main class="router-view">
+  <component :is="layout">
     <router-view />
-  </main>
-  <Footer />
-  <AuthModal v-if="isAuthModalVisible" v-model="isAuthModalVisible" />
-  <FloatingMessage />
+  </component>
 </template>
 
 <script>
 import { useCookies } from 'vue3-cookies'
-import { mapMutations } from 'vuex'
-import Header from '@/components/layout/Header'
-import Footer from '@/components/layout/Footer'
-import AuthModal from '@/components/modals/AuthModal'
-import FloatingMessage from '@/components/layout/FloatingMessage'
+import { mapActions, mapMutations } from 'vuex'
 
 export default {
   name: 'App',
 
-  components: {
-    Header,
-    Footer,
-    AuthModal,
-    FloatingMessage
-  },
-
-  data() {
-    AuthModal
-    return {
-      isAuthModalVisible: false
-    }
-  },
-
   methods: {
-    ...mapMutations('user', ['SET_USER_DATA'])
+    ...mapActions('user', ['GET_USER_DATA']),
+    ...mapMutations('user', ['SET_TOKEN'])
+  },
+
+  computed: {
+    layout() {
+      return this.$route.meta.layout || 'DefaultLayout'
+    }
   },
 
   async created() {
-    this.$eventBus.on('openAuthModal', () => {
-      this.isAuthModalVisible = true
-    })
-
     const { cookies } = useCookies()
-    const form = {
-      token: cookies.get('auth_token'),
-      user: {
-        id: cookies.get('user_id'),
-        username: cookies.get('username'),
-        roles: JSON.parse(cookies.get('user_roles'))
-      }
-    }
+    const token = cookies.get('auth_token')
 
-    if (form.token && Object.values(form.user).every((value) => value.length)) {
-      this.SET_USER_DATA(form)
+    if (token) {
+      this.GET_USER_DATA(token)
     }
   }
 }
@@ -96,8 +70,18 @@ html,
 body {
   line-height: 1.5;
   text-rendering: optimizespeed;
-  background: $background;
+  background: $app;
   scroll-behavior: smooth;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    box-shadow: inset 0 0 6px rgb(0 0 0 / 30%);
+    background: #e5e5e6;
+  }
 }
 
 a:not([class]) {
@@ -135,31 +119,12 @@ input {
   outline: none;
 }
 
+input:-webkit-autofill {
+  box-shadow: inset 0 0 0 50px #fff !important;
+}
+
 #app {
   min-height: 100%;
-  background: $background;
-}
-
-.router-view {
-  margin: 110px auto 24px;
-  border-radius: 12px;
-  width: 85vw;
-  min-height: calc(100vh - 207px);
-  max-width: 1440px;
-  box-shadow: 0 10px 100px $shadow;
-  background: $white;
-}
-
-@media (max-width: 768px) {
-  .router-view {
-    width: 90vw;
-  }
-}
-
-@media (max-width: 425px) {
-  .router-view {
-    margin: 72px auto 24px;
-    min-height: calc(100vh - 169px);
-  }
+  background: $app;
 }
 </style>
